@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>時計サイネージ</title>
+<script src="components/Layout.js?update=0"></script>
+<script src="components/Clock.js?update=0"></script>
+<script src="components/Calendar.js?update=0"></script>
+<script src="components/Weather.js?update=0"></script>
+<script src="components/Message.js?update=0"></script>
+<script src="config/holidays.js?update=0"></script>
+<script src="config/messages.js?update=0"></script>
+<script>
+
+window.addEventListener('DOMContentLoaded', function() {
+
+	// 全体レイアウト
+	const layout = new Layout();
+	
+	// カレンダー
+	const calendar = new Calendar(layout, window.Holidays);
+	//const calendar = new Calendar(layout, window.Holidays, [2022, 10, 1]); // Test
+
+	// アナログ時計
+	const clock = new Clock(layout);
+	//const clock = new Clock(layout, [12, 34, 56]); // Test
+
+	// 天気予報
+	const weather = new Weather(layout);
+	//const weather = new Weather(layout, [[101, 201], [24, 12, 25], [10, 20]]); // Test
+
+	// メッセージ
+	const message = new Message(layout, window.Messages, window.Holidays);
+
+	// リサイズ対応
+	const resizeWindow = function() {
+		layout.resize(document.documentElement.clientWidth);
+	};
+	window.addEventListener('resize', resizeWindow);
+
+	// 初期化
+	resizeWindow();
+	const components = [ clock, calendar ];
+	const loaded = Date.now();
+	const initialDraw = setInterval(function() {
+		// Webフォントの読み込みが遅延するため、最初だけしばらく何度も描画する
+		for (const component of components) {
+			component.draw(true);
+		}
+		if (Date.now() - loaded > 5000) {
+			clearInterval(initialDraw);
+		}
+	}, 500);
+
+}); // End of window.addEventListener('DOMContentLoaded', function() {
+
+</script>
+<link rel="stylesheet" href="subsetfont.css?update=0">
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 25%, #ffe0e0 25%, #ffe0e0 50%, #ffffff 50%, #ffffff 75%, #ffe0e0 75%);
+	background-repeat: repeat;
+	background-size: 12px 12px;
+}
+#calendar, #clock, #weather, #message {
+	position: absolute;
+}
+</style>
+</head>
+<body></body>
+</html>

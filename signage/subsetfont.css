@@ -1,0 +1,11 @@
+/*
+ * This application uses "Gen Jyuu Gothic" (http://jikasei.me/font/genjyuu/).
+ * © 2015 自家製フォント工房, © 2014, 2015 Adobe Systems Incorporated, © 2015 M+ FONTS PROJECT
+ * Licensed under SIL Open Font License 1.1 (http://scripts.sil.org/OFL)
+ */
+@font-face {
+	font-family: 'subsetfont';
+	font-style: normal;
+	font-weight: 400;
+	src: url(subsetfont-20220916.ttf) format('truetype');
+}

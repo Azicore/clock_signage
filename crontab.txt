@@ -1,0 +1,1 @@
+@reboot  /home/pi/www/startup.sh >/dev/null 2>&1
