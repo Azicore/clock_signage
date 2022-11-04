@@ -41,10 +41,54 @@ class Calendar {
 		 */
 		this.holidays = holidays; // 国民の祝日
 
+		/**
+		 * 月ごとの背景色
+		 * @type {Array[]}
+		 */
+		this.backgroundColors = [
+			['#ffffff', '#ff90b5', '#fffcf0'], //  1月
+			['#ffffff', '#acdaff', '#e4fffe'], //  2月
+			['#ffffff', '#81ff70', '#fbffb0'], //  3月
+			['#ffffff', '#ffe3f3', '#ffd8d8'], //  4月
+			['#ffffff', '#40fb5d', '#c6ffbb'], //  5月
+			['#ffffff', '#ffdef8', '#e9cdff'], //  6月
+			['#ffffff', '#95bcff', '#ffffc8'], //  7月
+			['#ffffff', '#f7f7f7', '#9ad1ff'], //  8月
+			['#ffffff', '#d09ad7', '#ffeebf'], //  9月
+			['#ffffff', '#efefef', '#ffd1a5'], // 10月
+			['#ffffff', '#b8d5ab', '#efebe8'], // 11月
+			['#ffffff', '#9fff97', '#ffa9a9']  // 12月
+		];
+
+		/**
+		 * CSS変数設定用の要素
+		 * @type {HTMLElement}
+		 */
+		this.root = document.querySelector(':root');
+
+		/**
+		 * body要素
+		 * @type {HTMLElement}
+		 */
+		this.body = document.body;
+
 		this.elem.id = 'calendar';
-		document.body.appendChild(this.elem);
+		this.body.appendChild(this.elem);
 		this.resize(500); // サイズは要素生成のための仮値
 		this.elem.appendChild(this.canv);
+
+		// 背景パターンの初期設定
+		this.body.style.backgroundRepeat = 'repeat';
+		this.body.style.backgroundImage = `linear-gradient(-45deg,
+			var(--background-a)  0%, var(--background-a) 10%,
+			var(--background-b) 10%, var(--background-b) 20%,
+			var(--background-a) 20%, var(--background-a) 30%,
+			var(--background-c) 30%, var(--background-c) 50%,
+			var(--background-a) 50%, var(--background-a) 60%,
+			var(--background-b) 60%, var(--background-b) 70%,
+			var(--background-a) 70%, var(--background-a) 80%,
+			var(--background-c) 80%, var(--background-c) 100%
+		)`;
 
 		// 自動更新
 		if (!debug) {
@@ -87,6 +131,7 @@ class Calendar {
 		this.elem.style.left = `${layout.x1}px`;
 		this.elem.style.top = `${layout.y1}px`;
 		this.ctx.textAlign = 'center';
+		this.body.style.backgroundSize = `${layout.bg}px ${layout.bg}px`; // 背景パターンのサイズ
 		const w = this.width / 600; // 設定値の基準となる値
 		const font = 'subsetfont';
 
@@ -187,6 +232,7 @@ class Calendar {
 		this._drawDayOfWeek();
 		this._drawMonth();
 		this._drawYear();
+		this._setBackground();
 	}
 
 	/**
@@ -281,6 +327,17 @@ class Calendar {
 		const yearSuffix = 'ねん';
 		const p = this.calendarConfig;
 		this._drawText(`${this.year} ${yearSuffix}`, this.width * 0.5 + p.yearOffset, p.yearPosition + p.yearFontSize * p.textBaseline, p.yearTextColor, p.yearFontSize, p.yearFontName);
+	}
+
+	/**
+	 * 背景パターンの変更
+	 */
+	_setBackground() {
+		const mon = this.debug ? this.debug[1] - 1 : this.mon;
+		const color = this.backgroundColors[mon];
+		this.root.style.setProperty('--background-a', color[0]);
+		this.root.style.setProperty('--background-b', color[1]);
+		this.root.style.setProperty('--background-c', color[2]);
 	}
 
 }

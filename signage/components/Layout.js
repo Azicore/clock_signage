@@ -18,7 +18,8 @@ class Layout {
 			marginY     : 0.25, // 縦方向のボックス間マージン
 			boxWidth    : 6.5, // 主ボックスの幅
 			boxHeight   : 6.5, // 主ボックスの高さ
-			borderRadius: 0.4  // ボックスの角丸半径
+			borderRadius: 0.4, // ボックスの角丸半径
+			background  : 0.25 // 背景パターンのサイズ
 		};
 
 		/**
@@ -99,6 +100,11 @@ class Layout {
 		 * @type {number}
 		 */
 		this.br = w * c.borderRadius;
+		/**
+		 * 背景パターンのサイズ
+		 * @type {number}
+		 */
+		this.bg = w * c.background;
 
 		// リサイズハンドラの実行
 		for (const f of this.handlers) {
