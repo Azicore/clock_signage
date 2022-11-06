@@ -287,6 +287,14 @@ class Message {
 				this.messageBlock.style.display = 'block';
 			}, 1000);
 		}, 500);
+
+		// 音を鳴らす（※ブラウザで自動再生を許可しておく必要あり）
+		if (msg.sound) {
+			const soundFile = `message_sounds/${msg.sound(params, this._select, values)}`;
+			if (soundFile) {
+				new Audio(soundFile).play();
+			}
+		}
 		
 		// 一定間隔でメッセージを変更
 		const isDebugMode = /debug/.test(location.search.slice(1));

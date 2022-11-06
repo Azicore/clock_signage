@@ -3,7 +3,7 @@ window.Messages = {
 
 		// ※説明用：
 		{
-			// 日時などの条件に基づいてメッセージの優先度を決定する関数。
+			// 日時などの条件に基づいてメッセージの優先度を決定する関数（必須）。
 			// 引数pの内容は、components/Message.jsのupdate()を参照。
 			cond: (p) => {
 				// 戻り値は以下の形のオブジェクト。
@@ -17,17 +17,24 @@ window.Messages = {
 				// 戻り値にnumberを返した場合は、{ condition: n }を返したものと解釈する。
 			},
 
-			// cond()に基づいて表示が確定した後、実際に表示するテキストを決定する関数。
+			// cond()に基づいて表示が確定した後、実際に表示するテキストを決定する関数（必須）。
 			// 引数pはcond()と同じ。selectはcomponents/Message.jsの_select()。
 			// valは、cond()がvaluesで返したオブジェクト。
 			text: (p, select, val) => {
 				return 'テキスト';
 			},
 
-			// テキストに伴うアイコンを決定する関数。
+			// テキストに伴うアイコンを決定する関数（必須）。
 			// 引数はtext()と同じ。
 			icon: (p, select, val) => {
 				return 'icon.png';
+			},
+
+			// メッセージと同時に鳴らすサウンドを決定する関数（任意）。
+			// 引数はtext()と同じ。
+			sound: (p, select, val) => {
+				// 空文字を返すと何も再生しない。
+				return 'sound.mp3';
 			}
 		},
 		
@@ -92,7 +99,8 @@ window.Messages = {
 					return `${['ごぜん', 'ごご'][p.ampm]}　${p.hour % 12}じ${h}　です！`;
 				}
 			},
-			icon: (p) => 'niwatori.png'
+			icon: (p) => 'niwatori.png',
+			sound: (p) => p.timeStr > '0000' && '0600' > p.timeStr ? '' : `time_${p.min == 0 ? '00' : '30'}.mp3`
 		},
 		// ▼時間問いかけ
 		{
