@@ -7,9 +7,9 @@ class Calendar {
 	 * 初期化
 	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
 	 * @param {Array[]} holidays - 祝日情報（config/holidays.js が window.Holidays に定義した配列）
-	 * @param {number[]} debug - 表示テスト用
+	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, holidays, debug) {
+	constructor(layout, holidays, config) {
 
 		/**
 		 * Device Pixel Ratio
@@ -91,12 +91,12 @@ class Calendar {
 		)`;
 
 		// 自動更新
-		if (!debug) {
+		if (!config.debug) {
 			setInterval(() => {
 				this.draw();
 			}, 999);
 		} else {
-			this.debug = debug;
+			this.debug = config.debug;
 			this.draw();
 		}
 

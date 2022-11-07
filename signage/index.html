@@ -8,6 +8,7 @@
 <script src="components/Calendar.js?update=0"></script>
 <script src="components/Weather.js?update=0"></script>
 <script src="components/Message.js?update=0"></script>
+<script src="config/config.js?update=0"></script>
 <script src="config/holidays.js?update=0"></script>
 <script src="config/messages.js?update=0"></script>
 <script>
@@ -18,19 +19,16 @@ window.addEventListener('DOMContentLoaded', function() {
 	const layout = new Layout();
 	
 	// カレンダー
-	const calendar = new Calendar(layout, window.Holidays);
-	//const calendar = new Calendar(layout, window.Holidays, [2022, 10, 1]); // Test
+	const calendar = new Calendar(layout, window.Holidays, window.Config.calendar);
 
 	// アナログ時計
-	const clock = new Clock(layout);
-	//const clock = new Clock(layout, [12, 34, 56]); // Test
+	const clock = new Clock(layout, window.Config.clock);
 
 	// 天気予報
-	const weather = new Weather(layout);
-	//const weather = new Weather(layout, [[101, 201], [24, 12, 25], [10, 20]]); // Test
+	const weather = new Weather(layout, window.Config.weather);
 
 	// メッセージ
-	const message = new Message(layout, window.Messages, window.Holidays);
+	const message = new Message(layout, window.Messages, window.Holidays, window.Config.message);
 
 	// リサイズ対応
 	const resizeWindow = function() {

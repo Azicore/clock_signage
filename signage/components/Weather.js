@@ -6,25 +6,18 @@ class Weather {
 	/**
 	 * 初期化
 	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {Array[]} debug - 表示テスト用
+	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, debug) {
+	constructor(layout, config) {
 
 		/**
 		 * 天気予報の地域
 		 * @type {object}
 		 */
 		this.areaDefinition = {
-			// 地域の設定方法：
-			// (1) https://www.jma.go.jp/bosai/common/const/area.json にアクセス。
-			// (2) .class20s[key1].nameが目的の市区町村になってるkey1を探し、.class20s[key1].parentをkey2とする。
-			// (3) .class15s[key2].parentをareaCodeとする。
-			// (4) .class10s[areaCode].parentをprefCodeとする。
-			// (5) https://www.jma.go.jp/bosai/forecast/const/forecast_area.json にアクセス。
-			// (6) [prefCode][n].class10がareaCodeとなってるnを探して、[prefCode][n].amedas[0]をamedasCodeとする。
-			areaCode  : 130010,
-			amedasCode: 44132,
-			prefCode  : 130000
+			areaCode  : config.areaCode,
+			amedasCode: config.amedasCode,
+			prefCode  : config.prefCode
 		};
 
 		/**
@@ -173,12 +166,12 @@ class Weather {
 		});
 
 		// 自動更新（2時間ごと）
-		if (!debug) {
+		if (!config.debug) {
 			setInterval(() => {
 				this.update();
 			}, 72e5);
 		} else {
-			this.debug = debug;
+			this.debug = config.debug;
 		}
 		this.update();
 

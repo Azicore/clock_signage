@@ -8,8 +8,9 @@ class Message {
 	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
 	 * @param {object} messages - メッセージ定義（config/messages.js が window.Messages に定義したオブジェクト）
 	 * @param {Array[]} holidays - 祝日情報（config/holidays.js が window.Holidays に定義した配列）
+	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, messages, holidays) {
+	constructor(layout, messages, holidays, config) {
 		/**
 		 * メッセージの定義
 		 * @type {object[]}

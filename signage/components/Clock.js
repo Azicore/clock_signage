@@ -6,9 +6,9 @@ class Clock {
 	/**
 	 * 初期化
 	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {number[]} debug - 表示テスト用
+	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, debug) {
+	constructor(layout, config) {
 
 		/**
 		 * Device Pixel Ratio
@@ -46,12 +46,12 @@ class Clock {
 		this.elem.appendChild(this.canv);
 
 		// 自動更新
-		if (!debug) {
+		if (!config.debug) {
 			setInterval(() => {
 				this.draw();
 			}, 999);
 		} else {
-			this.debug = debug;
+			this.debug = config.debug;
 			this.draw();
 		}
 
