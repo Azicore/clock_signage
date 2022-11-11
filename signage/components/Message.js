@@ -21,6 +21,26 @@ class Message {
 		 * @type {Array[]}
 		 */
 		this.holidays = holidays;
+		/**
+		 * メッセージの更新間隔
+		 * @type {number}
+		 */
+		this.updateInterval = config.updateInterval;
+		/**
+		 * サーバーメッセージのJSONのURL
+		 * @type {string}
+		 */
+		this.serverMessageUrl = config.serverMessageUrl;
+		/**
+		 * サーバーメッセージ確認のタイミング
+		 * @type {RegExp}
+		 */
+		this.serverCheckTiming = config.serverCheckTiming;
+		/**
+		 * サーバーから取得してきたメッセージ
+		 * @type {object}
+		 */
+		this.serverMessages = null;
 
 		/**
 		 * ブロック要素
@@ -221,11 +241,33 @@ class Message {
 	}
 
 	/**
+	 * 任意のサーバー上のメッセージを取得
+	 */
+	_getServerMessage() {
+		if (!this.serverMessageUrl) return;
+		const xhr = new XMLHttpRequest();
+		xhr.open('get', `${this.serverMessageUrl}?t=${Date.now()}`);
+		xhr.responseType = 'json';
+		xhr.onload = () => {
+			if (xhr.response.messages) {
+				this.serverMessages = {};
+				for (const msg of xhr.response.messages) {
+					const t = msg.time.split(/\D/);
+					const key = `${t[1]}${t[2]}${t[3]}${t[4]}00`; // MMDDhhmmss
+					this.serverMessages[key] = msg.text;
+				}
+			}
+		};
+		xhr.send();
+	}
+
+	/**
 	 * メッセージの変更
 	 */
 	update() {
 		// メッセージ選択のための条件パラメーター
 		const now = new Date();
+		const updateInterval = this.updateInterval;
 		const params = {
 			year : now.getFullYear(),  // 年（4桁）
 			mon  : now.getMonth() + 1, // 月（1～12）
@@ -233,13 +275,14 @@ class Message {
 			dow  : now.getDay(),       // 曜日（0～6）
 			hour : now.getHours(),     // 時（0～23）
 			min  : now.getMinutes(),   // 分（0～59）
-			sec  : Math.floor(now.getSeconds() / 15) * 15, // 秒（0、15、30、45）
+			sec  : Math.floor(now.getSeconds() / updateInterval) * updateInterval, // 秒（0、15、30、45）
 			utime: now.getTime()       // Unix Time
 		};
 		params.ampm = 12 > params.hour ? 0 : 1; // 午前・午後（0、1）
 		params.dateStr = `${params.mon * 100 + params.date}`.padStart(4, '0'); // 日付文字列（"MMDD"）
 		params.timeStr = `${params.hour * 10000 + params.min * 100 + params.sec}`.padStart(6, '0'); // 時刻文字列（"hhmmss"）
 		params.holidays = this.holidays; // 祝日情報
+		params.serverMessages = this.serverMessages || {}; // サーバーメッセージ
 		// メッセージ表示条件の確認
 		const msgCand = {};
 		let maxPriority = -1;
@@ -291,17 +334,22 @@ class Message {
 
 		// 音を鳴らす（※ブラウザで自動再生を許可しておく必要あり）
 		if (msg.sound) {
-			const soundFile = `message_sounds/${msg.sound(params, this._select, values)}`;
+			const soundFile = msg.sound(params, this._select, values);
 			if (soundFile) {
-				new Audio(soundFile).play();
+				new Audio(`message_sounds/${soundFile}`).play();
 			}
 		}
 		
+		// 15分ごとにサーバーメッセージを確認
+		if (this.serverMessageUrl) {
+			const isServerCheckTiming = this.serverCheckTiming.test(params.timeStr);
+			if (!this.serverMessages || isServerCheckTiming) this._getServerMessage();
+		}
+
 		// 一定間隔でメッセージを変更
-		const isDebugMode = /debug/.test(location.search.slice(1));
 		setTimeout(() => {
 			this.update();
-		}, isDebugMode ? 5000 : 15000);
+		}, updateInterval * 1000);
 	}
 
 }

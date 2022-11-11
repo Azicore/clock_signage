@@ -38,6 +38,20 @@ window.Messages = {
 			}
 		},
 		
+		// ▼サーバーメッセージ
+		{
+			cond: (p) => {
+				const key = `${p.dateStr}${p.timeStr}`;
+				if (p.serverMessages[key]) {
+					return { condition: 10, values: p.serverMessages[key] };
+				} else {
+					return 0;
+				}
+			},
+			text: (p, select, val) => val,
+			icon: (p) => 'tora.png',
+			sound: (p) => 'notification.mp3'
+		},
 		// ▼生活時間お知らせ
 		{
 			cond: (p) => {
