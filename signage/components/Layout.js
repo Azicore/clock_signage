@@ -1,7 +1,12 @@
+import Calendar from './Calendar.js';
+import Clock from './Clock.js';
+import Weather from './Weather.js';
+import Message from './Message.js';
+
 /**
  * 全体レイアウト
  */
-class Layout {
+export default class Layout {
 
 	/**
 	 * 初期化
@@ -23,10 +28,15 @@ class Layout {
 		};
 
 		/**
-		 * 他パーツのリサイズハンドラ
-		 * @type {function[]}
+		 * 各コンポーネントのインスタンス
+		 * @type {object}
 		 */
-		this.handlers = [];
+		this.components = {
+			calendar: new Calendar(),
+			clock   : new Clock(),
+			weather : new Weather(),
+			message : new Message()
+		};
 
 		this.resize(1000);
 	}
@@ -106,18 +116,10 @@ class Layout {
 		 */
 		this.bg = w * c.background;
 
-		// リサイズハンドラの実行
-		for (const f of this.handlers) {
-			f(this);
+		// 各コンポーネントのリサイズハンドラの実行
+		for (const name in this.components) {
+			this.components[name].resize(this);
 		}
-	}
-
-	/**
-	 * リサイズハンドラの登録
-	 * @param {function} func - リサイズハンドラ
-	 */
-	registerResizeHandler(func) {
-		this.handlers.push(func);
 	}
 
 }

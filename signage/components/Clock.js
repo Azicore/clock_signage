@@ -1,14 +1,14 @@
+import { clock as config } from '../config/config.js';
+
 /**
  * アナログ時計
  */
-class Clock {
+export default class Clock {
 
 	/**
 	 * 初期化
-	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, config) {
+	constructor() {
 
 		/**
 		 * Device Pixel Ratio
@@ -54,11 +54,6 @@ class Clock {
 			this.debug = config.debug;
 			this.draw();
 		}
-
-		// リサイズハンドラの登録
-		layout.registerResizeHandler((layout) => {
-			this.resize(layout);
-		});
 	}
 
 	/**

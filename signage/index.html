@@ -3,54 +3,32 @@
 <head>
 <meta charset="utf-8">
 <title>時計サイネージ</title>
-<script src="components/Layout.js"></script>
-<script src="components/Clock.js"></script>
-<script src="components/Calendar.js"></script>
-<script src="components/Weather.js"></script>
-<script src="components/Message.js"></script>
-<script src="config/config.js"></script>
-<script src="config/holidays.js"></script>
-<script src="config/messages.js"></script>
-<script>
+<script type="module">
 
-window.addEventListener('DOMContentLoaded', function() {
+import Layout from './components/Layout.js';
 
-	// 全体レイアウト
-	const layout = new Layout();
-	
-	// カレンダー
-	const calendar = new Calendar(layout, window.Holidays, window.Config.calendar);
+// 全体レイアウト
+const layout = new Layout();
 
-	// アナログ時計
-	const clock = new Clock(layout, window.Config.clock);
+// リサイズ対応
+const resizeWindow = function() {
+	layout.resize(document.documentElement.clientWidth);
+};
+window.addEventListener('resize', resizeWindow);
 
-	// 天気予報
-	const weather = new Weather(layout, window.Config.weather);
-
-	// メッセージ
-	const message = new Message(layout, window.Messages, window.Holidays, window.Config.message);
-
-	// リサイズ対応
-	const resizeWindow = function() {
-		layout.resize(document.documentElement.clientWidth);
-	};
-	window.addEventListener('resize', resizeWindow);
-
-	// 初期化
-	resizeWindow();
-	const components = [ clock, calendar ];
-	const loaded = Date.now();
-	const initialDraw = setInterval(function() {
-		// Webフォントの読み込みが遅延するため、最初だけしばらく何度も描画する
-		for (const component of components) {
-			component.draw(true);
-		}
-		if (Date.now() - loaded > 5000) {
-			clearInterval(initialDraw);
-		}
-	}, 500);
-
-}); // End of window.addEventListener('DOMContentLoaded', function() {
+// 初期化
+resizeWindow();
+const components = [ layout.components.clock, layout.components.calendar ];
+const loaded = Date.now();
+const initialDraw = setInterval(function() {
+	// Webフォントの読み込みが遅延するため、最初だけしばらく何度も描画する
+	for (const component of components) {
+		component.draw(true);
+	}
+	if (Date.now() - loaded > 5000) {
+		clearInterval(initialDraw);
+	}
+}, 500);
 
 </script>
 <link rel="stylesheet" href="subsetfont.css">

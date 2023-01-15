@@ -1,4 +1,4 @@
-window.Holidays = [
+const holidays = [
 	[2022,  1,  1, "がんじつ"],
 	[2022,  1, 10, "せいじんのひ"],
 	[2022,  2, 11, "けんこくきねんのひ"],
@@ -36,3 +36,4 @@ window.Holidays = [
 	val[4] = new Date(val[0], val[1] - 1, val[2]).getTime();
 	return val;
 });
+export default holidays;

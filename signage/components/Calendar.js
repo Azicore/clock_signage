@@ -1,15 +1,15 @@
+import { calendar as config } from '../config/config.js';
+import holidays from '../config/holidays.js';
+
 /**
  * カレンダー
  */
-class Calendar {
+export default class Calendar {
 
 	/**
 	 * 初期化
-	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {Array[]} holidays - 祝日情報（config/holidays.js が window.Holidays に定義した配列）
-	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, holidays, config) {
+	constructor() {
 
 		/**
 		 * Device Pixel Ratio
@@ -99,11 +99,6 @@ class Calendar {
 			this.debug = config.debug;
 			this.draw();
 		}
-
-		// リサイズハンドラの登録
-		layout.registerResizeHandler((layout) => {
-			this.resize(layout);
-		});
 	}
 
 	/**

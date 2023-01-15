@@ -1,21 +1,21 @@
+import { message as config } from '../config/config.js';
+import holidays from '../config/holidays.js';
+import messages from '../config/messages.js';
+
 /**
  * メッセージ
  */
-class Message {
+export default class Message {
 
 	/**
 	 * 初期化
-	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {object} messages - メッセージ定義（config/messages.js が window.Messages に定義したオブジェクト）
-	 * @param {Array[]} holidays - 祝日情報（config/holidays.js が window.Holidays に定義した配列）
-	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, messages, holidays, config) {
+	constructor() {
 		/**
 		 * メッセージの定義
 		 * @type {object[]}
 		 */
-		this.messages = messages.definitions;
+		this.messages = messages;
 		/**
 		 * 祝日情報
 		 * @type {Array[]}
@@ -146,11 +146,6 @@ class Message {
 			fontSize  : 'var(--message-msg-fontsize)',
 			lineHeight: 'var(--message-msg-line)',
 			margin    : 'var(--message-msg-margin)'
-		});
-
-		// リサイズハンドラの登録
-		layout.registerResizeHandler((layout) => {
-			this.resize(layout);
 		});
 
 		this.update();

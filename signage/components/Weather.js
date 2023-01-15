@@ -1,14 +1,14 @@
+import { weather as config } from '../config/config.js';
+
 /**
  * 天気予報
  */
-class Weather {
+export default class Weather {
 
 	/**
 	 * 初期化
-	 * @param {Layout} layout - レイアウト情報（{@link Layout}オブジェクト）
-	 * @param {object} config - 設定情報
 	 */
-	constructor(layout, config) {
+	constructor() {
 
 		/**
 		 * 天気予報の地域
@@ -158,11 +158,6 @@ class Weather {
 			fontSize  : 'var(--weather-text-height)',
 			lineHeight: 'var(--weather-title-height)',
 			textAlign : 'center'
-		});
-
-		// リサイズハンドラの登録
-		layout.registerResizeHandler((layout) => {
-			this.resize(layout);
 		});
 
 		// 自動更新（2時間ごと）
