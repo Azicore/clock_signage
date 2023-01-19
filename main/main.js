@@ -14,7 +14,8 @@ window.addEventListener('DOMContentLoaded', function() {
 			 * @type {object}
 			 */
 			this.apps = {
-				'1': { path: '/signage/', name: '時計サイネージ' }
+				'1': { path: '/signage/', name: '時計サイネージ' },
+				'2': { path: '/screensaver/', name: 'スクリーンセーバー' }
 			};
 			/**
 			 * デフォルトのアプリ
