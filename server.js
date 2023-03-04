@@ -1,6 +1,8 @@
-const express   = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const path      = require('path');
+const path = require('path');
+const { execSync } = require('child_process');
 
 // HTTPとWebSocketで使用するポート（起動時にコマンドライン引数で渡す）
 const appPort = +process.argv[2] || 8080;
@@ -21,12 +23,35 @@ app.get('/port', (req, res, next) => {
 	res.send(`window.webSocketPort = ${wsPort};`);
 });
 
-// それ以外の「/」直下のパスは403にする
-app.all(/^\/[^\/]*$/, (req, res, next) => {
-	res.sendStatus(403);
+// POSTの受け取り
+app.use('/', bodyParser.json());
+
+app.use('/', (req, res, next) => {
+	// 「/」直下
+	if (!/.\//.test(req.path)) {
+		res.sendStatus(403);
+	
+	// 「/」直下以外の通常ファイル
+	} else if (!/\.sh$/.test(req.path)) {
+		next();
+	
+	// シェルスクリプトの実行
+	} else if (req.method == 'POST' && req.headers['x-command-exec'] == 'yes') {
+		let cmd = `bash .${req.path}`;
+		const params = req.body && Array.isArray(req.body.params) ? req.body.params : [];
+		for (const param of params) {
+			cmd = `${cmd} "${param}"`;
+		}
+		execSync(cmd);
+		res.json({ ok: true });
+	
+	} else {
+		res.sendStatus(403);
+	
+	}
 });
 
-// それ以外の各アプリディレクトリ以下のファイルは静的に返す
+// 静的ファイル
 app.use('/', express.static(path.join(__dirname, './')));
 
 // 通常のHTTPサーバーの起動

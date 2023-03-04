@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="subsetfont.css">
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+}
+:root {
+	--page-bgcolor: #fafafa;
+	--timer-size: 80px;
+	--timer-line-size: 4px;
+	--timer-color: #999999;
+}
+body {
+	background: var(--page-bgcolor);
+	text-align: center;
+	font-family: 'subsetfont';
+}
+h1 {
+	padding: 120px 0px 0px;
+	font-size: 20px;
+	font-weight: normal;
+}
+#text {
+	margin: 16px 0px 0px;
+	font-size: 32px;
+	font-weight: bold;
+}
+.loading #text {
+	color: #cccccc;
+}
+table {
+	margin: 32px auto 0px;
+	border-collapse: collapse;
+}
+#yes_button, #no_button {
+	width: 360px;
+	height: 200px;
+	border: 1px solid #999999;
+	border-radius: 32px;
+	background: #ffffff;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+#yes_button {
+	border: 4px solid #ff0000;
+	color: #ff0000;
+}
+.loading #yes_button {
+	border: 4px solid #ffcccc;
+	background: #f0f0f0;
+}
+#no_button {
+	border: 4px solid #009900;
+	color: #009900;
+}
+.loading #no_button {
+	border: 4px solid #ccddcc;
+	background: #f0f0f0;
+}
+#yes, #no {
+	margin: 20px 0px 0px;
+	text-align: center;
+	font-size: 32px;
+	font-weight: bold;
+	line-height: 44px;
+}
+#yes_text, #no_text {
+	margin: 8px 16px;
+	text-align: center;
+	font-size: 20px;
+	line-height: 32px;
+	color: #000000;
+}
+#timer {
+	width: var(--timer-size);
+	height: var(--timer-size);
+	margin: 0px 16px;
+	padding: var(--timer-line-size);
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+#timer_num {
+	width: calc(var(--timer-size) - 2 * var(--timer-line-size));
+	height: calc(var(--timer-size) - 2 * var(--timer-line-size));
+	border-radius: 50%;
+	background: var(--page-bgcolor);
+	font-size: 24px;
+	color: #999999;
+	line-height: calc(var(--timer-size) - 2 * var(--timer-line-size));
+}
+</style>
+<script type="module">
+import ShutdownMessage from './ShutdownMessage.js';
+import { config } from './config.js';
+new ShutdownMessage(config);
+</script>
+</head>
+<body>
+<h1 id="title"></h1>
+<p id="text"></p>
+<table>
+	<tr>
+		<td><div id="yes_button"><p id="yes"></p><p id="yes_text"></div></td>
+		<td><div id="timer"><div id="timer_num"></div></div></td>
+		<td><div id="no_button"><p id="no"></p><p id="no_text"></div></td>
+	</tr>
+</table>
+</body>
+</html>

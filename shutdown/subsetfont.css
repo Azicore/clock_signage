@@ -1,0 +1,11 @@
+/*
+ * This application uses "Gen Shin Gothic" (http://jikasei.me/font/genshin/).
+ * © 2015 自家製フォント工房, © 2014, 2015 Adobe Systems Incorporated, © 2015 M+ FONTS PROJECT
+ * Licensed under SIL Open Font License 1.1 (http://scripts.sil.org/OFL)
+ */
+@font-face {
+	font-family: 'subsetfont';
+	font-style: normal;
+	font-weight: 400;
+	src: url(subsetfont-20230221.ttf) format('truetype');
+}
