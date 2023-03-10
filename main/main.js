@@ -15,7 +15,8 @@ window.addEventListener('DOMContentLoaded', function() {
 			 */
 			this.apps = {
 				'1': { path: '/signage/', name: '時計サイネージ' },
-				'2': { path: '/floating_clock/', name: 'スクリーンセーバー' },
+				'2': { path: '/floating_clock/', name: 'デジタル時計' },
+				'3': { path: '/photo_slideshow/', name: 'フォトスライドショー' },
 				'9': { path: '/shutdown/', name: '再起動/シャットダウン' }
 			};
 			/**
