@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	/* "bg.jpg" is distributed by https://patterns.nanya-kanya.info/detail/6010/ */
+	background: url('bg.jpg');
+	overflow: hidden;
+}
+.label {
+	padding: 2px 12px;
+	background: #999999;
+	color: #ffffff;
+	font-size: 16px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	transition: opacity 0.2s linear;
+}
+.label_closed {
+	opacity: 0;
+}
+</style>
+<script type="module">
+
+import Kakijun from './components/Kakijun.js';
+import { strokeData } from './strokeData.js';
+import { config } from './config.js';
+
+// 文字列集合の選択
+const stringGroup = new class {
+	// 初期化
+	constructor() {
+		// 文字列集合
+		this.groupList = config.stringGroups;
+		this.LS_KEY = 'kakijunStringGroup';
+		this.saveInterval = 5000;
+		this.selectedGroup = 0;
+		// リロード（＝直前の情報保存から一定時間以内）の場合は次の文字列集合を選択
+		try {
+			const savedData = sessionStorage.getItem(this.LS_KEY);
+			if (savedData) {
+				const s = JSON.parse(savedData);
+				if (s.timestamp > Date.now() - this.saveInterval) {
+					this.selectedGroup = (s.group + 1) % this.groupList.length;
+				}
+			}
+		} catch (e) { }
+		this.list = this.groupList[this.selectedGroup].list;
+		this._showSelectedGroupName();
+		this._setAutoSave();
+	}
+	// 選択した文字列集合の名前を左上に表示
+	_showSelectedGroupName() {
+		const groupName = this.groupList[this.selectedGroup].name;
+		const label = document.createElement('div');
+		label.innerHTML = groupName;
+		label.classList.add('label');
+		document.body.insertAdjacentElement('beforeend', label);
+		setTimeout(() => {
+			label.classList.add('label_closed');
+		}, 3000);
+	}
+	// 情報の自動保存
+	_saveStatus() {
+		sessionStorage.setItem(this.LS_KEY, JSON.stringify({
+			group: this.selectedGroup,
+			timestamp: Date.now()
+		}));
+	}
+	// 情報の自動保存の開始
+	_setAutoSave() {
+		setInterval(() => {
+			this._saveStatus();
+		}, this.saveInterval);
+		this._saveStatus();
+	}
+}();
+
+// アニメーションの開始
+new Kakijun(document.getElementById('main'), strokeData, stringGroup.list, config.config).start();
+
+</script>
+</head>
+<body>
+<canvas id="main"></canvas>
+</body>
+</html>
