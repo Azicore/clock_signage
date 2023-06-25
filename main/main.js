@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				'2': { path: '/floating_clock/', name: 'デジタル時計' },
 				'3': { path: '/photo_slideshow/', name: 'フォトスライドショー' },
 				'4': { path: '/kakijun/', name: '書き順' },
+				'5': { path: '/envmonitor/', name: '環境モニター' },
 				'9': { path: '/shutdown/', name: '再起動/シャットダウン' }
 			};
 			/**

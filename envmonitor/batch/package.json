@@ -1,0 +1,7 @@
+{
+  "main": "run.js",
+  "dependencies": {
+    "i2c-bus": "^5.2.2",
+    "serialport": "^11.0.0"
+  }
+}

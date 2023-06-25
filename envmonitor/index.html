@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="subsetfont.css">
+<script type="module">
+
+import EnvMonitor from './components/EnvMonitor.js';
+import MiniClock from './components/MiniClock.js';
+import { config } from './config.js';
+
+new EnvMonitor(config).start();
+new MiniClock().start();
+
+</script>
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+}
+:root {
+	--block-width: calc(50vw * 1);
+	--block-height: calc(50vh * 1);
+	--title-height: calc(var(--block-height) * 0.25);
+	--chart-height: calc(var(--block-height) * 0.75);
+	--clock-height: calc(var(--block-height) * 0.1);
+}
+body {
+	height: 100vh;
+	font-family: 'subsetfont';
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+}
+.chart_block {
+	width: var(--block-width);
+	height: var(--block-height);
+}
+.chart_title {
+	width: var(--block-width);
+	height: var(--title-height);
+	position: relative;
+}
+.chart_title p {
+	font-size: calc(var(--title-height) * 0.3);
+	position: absolute;
+	left: calc(var(--block-width) * 0.1);
+	bottom: calc(var(--title-height) * 0.1);
+}
+.chart_container {
+	width: var(--block-width);
+	height: var(--chart-height);
+}
+#clock {
+	padding: 0px 0.5em;
+	background: #333333;
+	color: #ffffff;
+	letter-spacing: 0.2em;
+	font-size: calc(var(--clock-height) * 0.6);
+	line-height: var(--clock-height);
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+</style>
+</head>
+<body>
+<div class="chart_block">
+	<div class="chart_title">
+		<p><ruby>気温<rt>きおん</rt></ruby>：<span id="chart1_value"></span><ruby>℃<rt>ど</rt></ruby></p>
+	</div>
+	<div class="chart_container" id="chart1"></div>
+</div><div class="chart_block">
+	<div class="chart_title">
+		<p><ruby>湿度<rt>しつど</rt></ruby>：<span id="chart2_value"></span><ruby>%<rt>パーセント</rt></ruby></p>
+	</div>
+	<div class="chart_container" id="chart2"></div>
+</div><div class="chart_block">
+	<div class="chart_title">
+		<p><ruby>気圧<rt>きあつ</rt></ruby>：<span id="chart3_value"></span><ruby>hPa<rt>ヘクトパスカル</rt></ruby></p>
+	</div>
+	<div class="chart_container" id="chart3"></div>
+</div><div class="chart_block">
+	<div class="chart_title">
+		<p><ruby>二酸化炭素濃度<rt>にさんかたんそのうど</rt></ruby>：<span id="chart4_value"></span><ruby>ppm<rt>ピーピーエム</rt></ruby></p>
+	</div>
+	<div class="chart_container" id="chart4"></div>
+</div>
+<div id="clock"></div>
+</body>
+</html>
