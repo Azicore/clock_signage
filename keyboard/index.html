@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="subsetfont.css">
+<style>
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+:root {
+	--suggest-width: calc(100vw * 0.25);
+	--line-width: calc(100vw - var(--suggest-width));
+	--line-padding: calc(var(--line-width) * 0.01);
+	--line-char-width: calc((var(--line-width) - var(--line-padding) * 2) / 20.2);
+	--line-char-height: calc(var(--line-char-width) * 1.2);
+	--line-cursor: calc(var(--line-char-width) * 0.08);
+	--line-font-size: calc((var(--line-char-width) - var(--line-cursor)) * 1);
+}
+body {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	font-family: 'subsetfont';
+}
+
+#input_area {
+	width: var(--line-width);
+	padding: var(--line-padding);
+	box-sizing: border-box;
+	position: fixed;
+}
+.line {
+	line-height: var(--line-char-height);
+}
+.line span {
+	width: var(--line-char-width);
+	height: var(--line-char-height);
+	border-left: var(--line-cursor) solid transparent;
+	font-size: var(--line-font-size);
+	text-align: center;
+	vertical-align: top;
+	box-sizing: border-box;
+	display: inline-block;
+}
+.line span.inputting_char {
+	border-left: 0px;
+	border-bottom: var(--line-cursor) solid #cc3366;
+	background: #ffff99;
+	color: #cc3366;
+}
+.line span.line_end {
+	width: var(--line-cursor);
+}
+.line span.cursor {
+	animation: 1s steps(2, jump-none) infinite cursor;
+}
+@keyframes cursor {
+	from {
+		border-left: var(--line-cursor) solid #000000;
+	}
+	to {
+		border-left: var(--line-cursor) solid transparent;
+	}
+}
+
+#suggest {
+	--suggest-font-size: calc(var(--suggest-width) * 0.055);
+	--suggest-key-border: calc(var(--suggest-font-size) * 0.2);
+	width: var(--suggest-width);
+	height: 100vh;
+	padding: calc(var(--suggest-width) * 0.05);
+	background: #f0f0f0;
+	font-size: var(--suggest-font-size);
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	box-sizing: border-box;
+}
+#suggest_msg {
+	margin: calc(var(--suggest-width) * 0.02) 0px calc(var(--suggest-width) * 0.05);
+	font-weight: bold;
+}
+#suggest .suggest_line {
+	line-height: calc(var(--suggest-font-size) * 1.8);
+}
+#suggest .key {
+	width: calc(var(--suggest-font-size) * 1.25);
+	height: calc(var(--suggest-font-size) * 1.25);
+	border-top: var(--suggest-key-border) solid #fafafa;
+	border-right: var(--suggest-key-border) solid #333399;
+	border-bottom: var(--suggest-key-border) solid #333366;
+	border-left: var(--suggest-key-border) solid #d0d0d0;
+	border-radius: calc(var(--suggest-key-border) * 1.5);
+	background: #6633cc;
+	color: #ffffff;
+	text-align: center;
+	line-height: calc(var(--suggest-font-size) * 1.25);
+	vertical-align: middle;
+	display: inline-block;
+	transform: perspective(calc(var(--suggest-width) * 0.2)) rotateX(15deg);
+}
+#suggest .key_input {
+	border-top: var(--suggest-key-border) solid #fafafa;
+	border-right: var(--suggest-key-border) solid #993333;
+	border-bottom: var(--suggest-key-border) solid #663333;
+	border-left: var(--suggest-key-border) solid #d0d0d0;
+	background: #cc3366;
+}
+
+#start {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.4);
+	position: fixed;
+	left: 0px;
+	top: 0px;
+}
+#start_msg {
+	width: 75vw;
+	height: 32vh;
+	margin: 16vh auto;
+	padding: 4vh 0px;
+	background: #ffffff;
+	text-align: center;
+	line-height: 8vh;
+	font-size: 4vh;
+	box-sizing: border-box;
+}
+
+</style>
+<script type="module">
+
+import Keyboard from './components/Keyboard.js';
+import InputMapping from './components/InputMapping.js';
+import { mapping } from './mapping.js';
+
+new Keyboard(new InputMapping(mapping));
+
+</script>
+</head>
+<body></body>
+</html>

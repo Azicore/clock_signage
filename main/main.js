@@ -19,6 +19,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				'3': { path: '/photo_slideshow/', name: 'フォトスライドショー' },
 				'4': { path: '/kakijun/', name: '書き順' },
 				'5': { path: '/envmonitor/', name: '環境モニター' },
+				'6': { path: '/keyboard/', name: 'キーボード' },
 				'9': { path: '/shutdown/', name: '再起動/シャットダウン' }
 			};
 			/**
@@ -78,6 +79,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (appId == null) appId = this.defaultAppId;
 			if (!this.apps[appId]) return;
 			this.iframe.src = `${this.apps[appId].path}?v=${Date.now()}`;
+			this.iframe.focus();
 		}
 
 		/**
