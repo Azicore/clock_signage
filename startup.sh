@@ -1,9 +1,12 @@
 #!/bin/bash
 
-HTTP_PORT=8080
-WS_PORT=8081
-
 cd /home/pi/www/
+if [ ! -f config.sh ]
+then
+  exit
+fi
+. config.sh
+
 sleep 10
 node server.js $HTTP_PORT $WS_PORT &
 export DISPLAY=:0

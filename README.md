@@ -12,7 +12,7 @@ noteに簡単な製作記を投稿しました。まずはこちらをお読み�
 
 * 私的な作品ですので、改善依頼やプルリクエスト等は受け付けません。
 * 当リポジトリ内のコードの使用や以下に説明の手順の実行は、全て自己責任にてお願いいたします。
-* 本作品に関する質問は、Twitter（[@Azicore](https://twitter.com/Azicore)）で受け付けます。
+* 本作品に関する質問は、X/Twitter（[@Azicore](https://x.com/Azicore)）で受け付けます。
 
 ## 推奨環境
 
@@ -69,6 +69,7 @@ noteに簡単な製作記を投稿しました。まずはこちらをお読み�
 ### 基本の設定
 
 1. 本リポジトリのルートディレクトリを、`/home/pi/www/`などに設置し、ドキュメントルートとする。
+1. 「`./init.sh`」を実行し、設定ファイルを初期化する。
 1. 「`crontab crontab.txt`」でcrontabを設定する。
 1. 「`sudo apt install unclutter`」でunclutterをインストールする。
 1. 「`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash`」でnvmをインストールする。
@@ -98,7 +99,7 @@ noteに簡単な製作記を投稿しました。まずはこちらをお読み�
 
 ### その他
 
-* ウェブサーバーのポート番号を変更するには、`startup.sh`の`HTTP_PORT`、`WS_PORT`を変更して下さい。
+* ウェブサーバーのポート番号を変更するには、`config.sh`の`HTTP_PORT`、`WS_PORT`を変更して下さい。
 * アプリを追加するには、`signage`や`floating_clock`同様にディレクトリを切り、`main/main.js`にパスと名前を追加すると、リモコンにボタンが追加されます。
 
 ## 更新履歴
