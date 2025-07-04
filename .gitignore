@@ -1,0 +1,12 @@
+# Installed files
+**/node_modules/
+
+# Customized config files
+**.my.*
+config.sh
+signage/config/config.js
+signage/config/messages.js
+photo_slideshow/config.js
+
+# Log files
+envmonitor/batch/log.json
