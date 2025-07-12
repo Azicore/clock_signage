@@ -394,8 +394,6 @@ export default class LineChart {
 			if (startx == null) return;
 			this._lineTo(x, ymin);
 			this._lineTo(startx, ymin);
-			ctx.closePath();
-			ctx.fill();
 			startx = null;
 		};
 		for (let x = xmin; xmax >= x; x++) {
@@ -408,6 +406,7 @@ export default class LineChart {
 			if (startx == null) startx = x;
 		}
 		closeFill(xmax);
+		ctx.fill();
 		// 線
 		ctx.strokeStyle = colorConfig.dataLineColor;
 		ctx.lineWidth = sizes.dataLineSize;
